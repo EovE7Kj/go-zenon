@@ -10,17 +10,17 @@ GIT_COMMIT=$(shell git rev-parse HEAD)
 GIT_COMMIT_FILE=$(shell pwd)/metadata/git_commit.go
 
 $(EXECUTABLE):
-	env CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o $(BUILDDIR)/$(EXECUTABLE) -buildmode=c-shared -tags libznn $(LIBMAIN)
+        go build -o $(BUILDDIR)/$(EXECUTABLE) -buildmode=c-shared -tags libznn $(LIBMAIN)
 
 libznn: $(EXECUTABLE) ## Build binaries
-	@echo "Build libznn done."
+        @echo "Build libznn done."
 
 znnd:
-	go build -o $(BUILDDIR)/znnd $(SERVERMAIN)
-	@echo "Build znnd done."
-	@echo "Run \"$(BUILDDIR)/znnd\" to start znnd."
+        env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o $(BUILDDIR)/znnd $(SERVERMAIN)
+        @echo "Build znnd done."
+        @echo "Run \"$(BUILDDIR)/znnd\" to start znnd."
 
 clean:
-	rm -r $(BUILDDIR)/
+        rm -r $(BUILDDIR)/
 
 all: znnd libznn
