@@ -9,6 +9,8 @@ BUILDDIR = $(shell pwd)/build
 GIT_COMMIT=$(shell git rev-parse HEAD)
 GIT_COMMIT_FILE=$(shell pwd)/metadata/git_commit.go
 
+export GO111MODULE=off
+
 $(EXECUTABLE):
         go build -o $(BUILDDIR)/$(EXECUTABLE) -buildmode=c-shared -tags libznn $(LIBMAIN)
 
